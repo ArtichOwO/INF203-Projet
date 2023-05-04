@@ -6,10 +6,10 @@ CFLAGS =
 LDFLAGS = -L$(shell xcode-select -p)/SDKs/MacOSX.sdk/usr/lib -lSystem
 
 objs = $(addprefix $(OUTPUT_DIR)/, \
-	main.o \
+	newcow.o \
 )
 
-cowsay: $(objs)
+newcow: $(objs)
 	@echo LD $@
 	@$(LD) $^ -o $(OUTPUT_DIR)/$@ $(LDFLAGS)
 
