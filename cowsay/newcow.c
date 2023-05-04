@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <EXTERN.h>
+#include <perl.h>
+
 #define E_BASIC "oo"
 #define E_DEAD "xx"
 #define E_GREEDY "$$"
