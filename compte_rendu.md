@@ -28,9 +28,10 @@ Les sources sont disponibles à [cette adresse](https://github.com/ArtichOwO/INF
     - [`include/animation.h`](#includeanimationh)
   - [`reading_cow`](#reading_cow)
     - [`reading_cow.c`](#reading_cowc)
+- [Automates](#automates)
   - [`tamagotchi_cow`](#tamagotchi_cow)
     - [`tamagotchi_cow.c`](#tamagotchi_cowc)
-  - [`Makefile`](#makefile)
+- [`Makefile`](#makefile)
 
 ## Préliminaires
 
@@ -878,6 +879,8 @@ int main(int argc, char *const argv[]) {
 }
 ```
 
+## Automates
+
 ### `tamagotchi_cow`
 
 #### `tamagotchi_cow.c`
@@ -954,6 +957,32 @@ int main(int argc, char const *argv[]) {
          */
         scanf("%i", &lunchfood);
 
+        if (lunchfood == 713705) {
+            gotoxy(5, 10);
+            printf("☀☀");
+            fflush(stdout);
+            sleep(2);
+            lunchfood = 0;
+        }
+
+        if (lunchfood == 0xDEADBEEF) {
+            char * phrases[][3] = { 
+                { "HA HA HA!", "OO", " " },
+                { "Oh, wow...", "óò", " " },
+                { "im die", "@@", " " },
+                { "thank u 4evah", "@@", "U" }
+            };
+
+            for (int i = 0; i < 4; i++) {
+                update();
+                print_msg_str(phrases[i][0]);
+                show_cow(phrases[i][1], phrases[i][2]);
+                sleep(2);
+            }
+
+            fitness = -1000;
+        }
+
         stock_update(&stock, lunchfood);
         fitness_update(&fitness, lunchfood);
     }
@@ -967,7 +996,7 @@ int main(int argc, char const *argv[]) {
 }
 ```
 
-### `Makefile`
+## `Makefile`
 
 ```makefile
 OUTPUT_DIR = dist

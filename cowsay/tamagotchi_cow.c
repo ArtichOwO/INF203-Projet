@@ -70,6 +70,32 @@ int main(int argc, char const *argv[]) {
 		 */
 		scanf("%i", &lunchfood);
 
+		if (lunchfood == 713705) {
+			gotoxy(5, 10);
+			printf("☀☀");
+			fflush(stdout);
+			sleep(2);
+			lunchfood = 0;
+		}
+
+		if (lunchfood == 0xDEADBEEF) {
+			char * phrases[][3] = { 
+				{ "HA HA HA!", "OO", " " },
+				{ "Oh, wow...", "óò", " " },
+				{ "im die", "@@", " " },
+				{ "thank u 4evah", "@@", "U" }
+			};
+
+			for (int i = 0; i < 4; i++) {
+				update();
+				print_msg_str(phrases[i][0]);
+				show_cow(phrases[i][1], phrases[i][2]);
+				sleep(2);
+			}
+
+			fitness = -1000;
+		}
+
 		stock_update(&stock, lunchfood);
 		fitness_update(&fitness, lunchfood);
 	}
