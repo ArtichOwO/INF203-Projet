@@ -1,4 +1,3 @@
-
 .PHONY: clean
 
 compte_rendu.pdf: compte_rendu.tex
@@ -7,7 +6,4 @@ compte_rendu.pdf: compte_rendu.tex
 
 clean:
 	@rm -f *.aux *.log *.out *.toc *.pdf
-	@rm -rf cowsay/dist
 	@echo CLEAN
-
-include cowsay/Makefile

@@ -3,27 +3,36 @@
 
 #include <print_msg.h>
 
-void print_msg(int argc, char *const argv[], int begin) {
+void print_msg_chr(int argc, char *const argv[], int begin, 
+                   char top, char bot, char left, char right) {
     int i;
 
     size_t msg_len = 0;
     for (i = begin; i < argc; i++)
         msg_len += strlen(argv[i]) + 1;
 
-    printf(" _");
+    printf(" %c", top);
     for (i = 0; i < msg_len; i++)
-        printf("_");
+        printf("%c", top);
     printf("\n");
 
-    printf("< ");
+    printf("%c ", left);
     for (i = begin; i < argc; i++)
         printf("%s ", argv[i]);
-    printf(">\n");
+    printf("%c\n", right);
 
-    printf(" -");
+    printf(" %c", bot);
     for (i = 0; i < msg_len; i++)
-        printf("-");
+        printf("%c", bot);
     printf("\n");
+}
+
+void print_msg(int argc, char *const argv[], int begin) {
+    print_msg_chr(argc, argv, begin, '_', '-', '<', '>');
+}
+
+void print_msg_think(int argc, char *const argv[], int begin) {
+    print_msg_chr(argc, argv, begin, '_', '-', '(', ')');
 }
 
 inline void print_msg_str(char * msg) {

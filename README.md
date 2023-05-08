@@ -31,6 +31,7 @@ Usage: newcow.exe [-e EYES] [-T TONGUE] [-d] [-g] [-p] [-s] [-t] [-w] [-y] [-h] 
 	-t		Tired cow
 	-w		Wired cow
 	-y		Young cow
+	-i		Thinking cow
 	-h		Show this help
 		INPUT	Input text to say
 ```

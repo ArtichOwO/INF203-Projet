@@ -24,7 +24,7 @@
 #define T_BASIC " "
 #define T_OUT "U"
 
-#define ARGC 11
+#define ARGC 12
 Usage options[ARGC] = {
     { "-e", "EYES", "Define eyes to use (use 2 chars)", false, false, true },
     { "-T", "TONGUE", "Define tongue to use (use 1 char)", false, false, true },
@@ -35,6 +35,7 @@ Usage options[ARGC] = {
     { "-t", "", "Tired cow", false, true, true },
     { "-w", "", "Wired cow", false, true, true },
     { "-y", "", "Young cow", false, true, true },
+    { "-i", "", "Thinking cow", false, true, true },
     { "-h", "", "Show this help", false, true, true },
     { "", "INPUT", "Input text to say", true, false, false },
 };
@@ -45,9 +46,11 @@ int main(int argc, char *const argv[]) {
     char * eyes = E_BASIC;
     char * tongue = T_BASIC;
 
+    bool think = false;
+
     int c;
 
-    while ((c = getopt(argc, argv, "e:T:dgpstwyh")) != -1)
+    while ((c = getopt(argc, argv, "e:T:dgpstwyih")) != -1)
         switch (c) {
             case 'e':
                 eyes = optarg;
@@ -78,6 +81,9 @@ int main(int argc, char *const argv[]) {
             case 'y':
                 eyes = E_YOUTH;
                 break;
+            case 'i':
+                think = true;
+                break;
             case 'h':
                 usage(options, ARGC, argv[0], description);
                 exit(EXIT_SUCCESS);
@@ -86,8 +92,15 @@ int main(int argc, char *const argv[]) {
                 exit(EXIT_FAILURE);
         }
 
-    print_msg(argc, argv, optind);
-    show_cow(eyes, tongue);
+    if (!think) 
+        print_msg(argc, argv, optind);
+    else
+        print_msg_think(argc, argv, optind);
+
+    if (!think)
+        show_cow(eyes, tongue);
+    else
+        show_cow_think(eyes, tongue);
 
     return 0;
 }
