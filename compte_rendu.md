@@ -978,8 +978,9 @@ endif
 
 # Si compilation avec Perl
 ifeq ($(USE_PERL), 1)
-    CCFLAGS += -D_GNU_SOURCE -DUSE_PERL -I$(shell perl -MConfig -e 'print $$Config{archlib}')/CORE
-    LDFLAGS += -L$(shell perl -MConfig -e 'print $$Config{archlib}')/CORE -lperl
+    LIBPERL_PATH = $(shell perl -MConfig -e 'print $$Config{archlib}')
+    CCFLAGS += -D_GNU_SOURCE -DUSE_PERL -I$(LIBPERL_PATH)/CORE
+    LDFLAGS += -L$(LIBPERL_PATH)/CORE -lperl
 endif
 
 objs = $(addprefix $(OUTPUT_DIR)/, \
