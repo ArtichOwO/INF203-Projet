@@ -9,6 +9,9 @@
 #include <animation.h>
 #include <usage.h>
 
+/* Documentation
+ * cf. /include/usage.h
+ */
 #define ARGC 2
 Usage options[ARGC] = {
     { "-h", "", "Show this help", false, true, true },
@@ -18,6 +21,13 @@ Usage options[ARGC] = {
 const char * description = "File-eater `cowsay'";
 
 void print_msg_end(int x, char c) {
+    /* Imprime la fin du texte
+     * __
+     * c >
+     * --
+     * ^
+     * x
+     */
     gotoxy(1, x);
     printf("__");
     gotoxy(2, x);
@@ -28,6 +38,7 @@ void print_msg_end(int x, char c) {
 
 int main(int argc, char *const argv[]) {
     int c;
+    // Parsing d'argument basique
     while ((c = getopt(argc, argv, "h")) != -1)
         switch (c) {
             case 'h':
@@ -59,10 +70,14 @@ int main(int argc, char *const argv[]) {
     };
 
     update();
-    print_msg(0, NULL, 0);
+    print_msg(0, NULL, 0); // Message vide
     show_cow("oo", " ");
 
     char letter = ' ';
+    /* String sous forme de tableau
+     * pour lui éviter d'être copié en .rodata
+     * et donc éviter les segfaults
+     */
     char tongue[] = { ' ', '\0' };
 
     for (int i = 2; !feof(input_file); i++) {
@@ -70,9 +85,9 @@ int main(int argc, char *const argv[]) {
 
         gotoxy(9, 0);
         if (is_stdin)
-            printf("\33[2K\rYour input (CTRL+D to exit): ");
+            printf("\33[2K\rYour input (Enter to confirm, CTRL+D to exit): ");
         letter = fgetc(input_file);
-        printf("\33[2K\r");
+        printf("\33[2K\r"); // Effacer la ligne d'input
         letter = letter == '\n' ? ' ' : letter; 
         tongue[0] = letter == EOF ? 'U' : letter;
         gotoxy(4, 0);
