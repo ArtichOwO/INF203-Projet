@@ -9,6 +9,9 @@
 #include <animation.h>
 #include <usage.h>
 
+/* Documentation
+ * cf. /include/usage.h
+ */
 #define ARGC 5
 Usage options[ARGC] = {
     { "-r", "", "Running cow", false, true, true },
@@ -21,6 +24,7 @@ Usage options[ARGC] = {
 const char * description = "Animated `cowsay'";
 
 void a_run() {
+    // Les différentes frames
     const char * anim[] = {
         "            /|----w /   \n"
         "            |\\     \\|   \n",
@@ -41,14 +45,16 @@ void a_run() {
     size_t anim_len = sizeof(anim) / sizeof(char *);
     int i = 0;
 
+    // Voir https://stackoverflow.com/a/1157217
     struct timespec ts = {
         .tv_sec = 0,
-        .tv_nsec = 250 * 1000000
+        .tv_nsec = 200 * 1000000 // 200ms en ns
     };
 
     while (true) {
+        // "Rembobiner" les frames
         if (i == anim_len) i = 0;
-
+        // Bouger le curseur pour réimprimer les jambes
         gotoxy(7, 0);
         printf("%s", anim[i++]);
         nanosleep(&ts, &ts);
@@ -56,6 +62,7 @@ void a_run() {
 }
 
 void a_tail(int length) {
+    // Bouger le curseur au niveau de la queue
     gotoxy(6, 22);
 
     struct timespec ts = {
@@ -65,7 +72,7 @@ void a_tail(int length) {
 
     for (int i = 0; i < length;i++) {
         printf(i%2 == 0 ? "\\" : "/");
-        fflush(stdout);
+        fflush(stdout); // Voir https://stackoverflow.com/a/338295
         nanosleep(&ts, &ts);
     }
 
@@ -79,13 +86,12 @@ void a_eyes() {
     };
     
     for (int i = 0;;i++) {
+        // Bouger le curseur au niveau des yeux
         gotoxy(5, 10);
         printf(i%2 == 0 ? "Oo" : "oO");
         fflush(stdout);
         nanosleep(&ts, &ts);
     }
-
-    gotoxy(9, 0);
 }
 
 int main(int argc, char *const argv[]) {
@@ -97,6 +103,7 @@ int main(int argc, char *const argv[]) {
 
     int A_TAIL_length = 0;
 
+    // Parsing d'argument basique
     while ((c = getopt(argc, argv, "rT:eh")) != -1)
         switch (c) {
             case 'r':
@@ -117,6 +124,7 @@ int main(int argc, char *const argv[]) {
                 exit(EXIT_FAILURE);
         }
 
+    // cf. /include/animation.h
     update();
 
     print_msg(argc, argv, optind);
