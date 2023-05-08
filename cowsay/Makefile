@@ -2,7 +2,6 @@ OUTPUT_DIR = dist
 CC = gcc
 LD = ld
 
-DEBUG ?= 0
 USE_PERL ?= 1
 
 CCFLAGS = -I include 
@@ -12,10 +11,6 @@ ifeq ($(shell uname -s),Darwin)
 	LDFLAGS += -L$(shell xcode-select -p)/SDKs/MacOSX.sdk/usr/lib -lSystem
 else
 	LD = gcc
-endif
-
-ifeq ($(DEBUG), 1)
-	CCFLAGS += -DDEBUG
 endif
 
 ifeq ($(USE_PERL), 1)

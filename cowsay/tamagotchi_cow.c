@@ -8,14 +8,17 @@
 #include <show_cow.h>
 #include <animation.h>
 
+// Yeux dans différents états
 #define E_LIFEROCKS "^^"
 #define E_LIFESUCKS "@@"
 #define E_BYEBYELIFE "xx"
 
+// Langue dans différents états
 #define T_LIFEROCKS " "
 #define T_LIFESUCKS " "
 #define T_BYEBYELIFE "U"
 
+// Impression de la vache dans différents états
 void show_cow_state(int fitness) {
 	if (4 <= fitness && fitness <= 6) {
 		show_cow(E_LIFEROCKS, T_LIFEROCKS);
@@ -27,24 +30,18 @@ void show_cow_state(int fitness) {
 	}
 }
 
+// Mettre à jour le stock de nourriture
 void stock_update(int * stock, int lunchfood) {
 	int crop = rand()%6 - 3;
 	*stock -= lunchfood - crop;
 	if (*stock < 0)
 		*stock = 0;
-
-	#ifdef DEBUG
-	printf("crop=%i\n", crop);
-	#endif // DEBUG
 }
 
+// Mettre à jour la santé de la vache
 void fitness_update(int * fitness, int lunchfood) {
 	int digestion = rand()%3;
 	*fitness += lunchfood - digestion;
-
-	#ifdef DEBUG
-	printf("digestion=%i\n", digestion);
-	#endif // DEBUG
 }
 
 int main(int argc, char const *argv[]) {
@@ -58,28 +55,26 @@ int main(int argc, char const *argv[]) {
 	srand ((unsigned)time(&t));
 
 	for (ctime = 0; 0 < fitness && fitness < 10; ctime++) {
-		#ifndef DEBUG
 		update();
-		#endif // DEBUG
 		sprintf(time_msg, "Time: %i", ctime);
 		print_msg_str(time_msg);
 		show_cow_state(fitness);
 
-		#ifdef DEBUG
-		printf("fitness=%i\n", fitness);
-		#endif // DEBUG
-
 		printf("Current stock: %i\n"
 			   "Give how much food: ", stock);
+		/* `lunchfood` pourrait être
+		 * plus élevé que `stock`
+		 * mais ça n'a pas d'importance
+		 * puisque `stock_update` remet à zéro
+		 * `stock` si elle est négative
+		 */
 		scanf("%i", &lunchfood);
 
 		stock_update(&stock, lunchfood);
 		fitness_update(&fitness, lunchfood);
 	}
 
-	#ifndef DEBUG
 	update();
-	#endif // DEBUG
 	sprintf(time_msg, "Score = %i", ctime);
 	print_msg_str(time_msg);
 	show_cow_state(fitness);
