@@ -18,18 +18,19 @@ Les sources sont disponibles à [cette adresse](https://github.com/ArtichOwO/INF
   - [`newcow`](#newcow)
     - [`newcow.c`](#newcowc)
     - [`print_msg.c`](#print_msgc)
-    - [`print_msg.h`](#print_msgh)
+    - [`include/print_msg.h`](#includeprint_msgh)
     - [`show_cow.c`](#show_cowc)
-    - [`show_cow.h`](#show_cowh)
+    - [`include/show_cow.h`](#includeshow_cowh)
     - [`usage.c`](#usagec)
-    - [`usage.h`](#usageh)
+    - [`include/usage.h`](#includeusageh)
   - [`wildcow`](#wildcow)
     - [`wildcow.c`](#wildcowc)
-    - [`animation.h`](#animationh)
+    - [`include/animation.h`](#includeanimationh)
   - [`reading_cow`](#reading_cow)
     - [`reading_cow.c`](#reading_cowc)
   - [`tamagotchi_cow`](#tamagotchi_cow)
     - [`tamagotchi_cow.c`](#tamagotchi_cowc)
+  - [`Makefile`](#makefile)
 
 ## Préliminaires
 
@@ -486,7 +487,7 @@ inline void print_msg_str(char * msg) {
 }
 ```
 
-#### `print_msg.h`
+#### `include/print_msg.h`
 ```c
 #ifndef PRINT_MSG_H
 #define PRINT_MSG_H
@@ -524,7 +525,7 @@ inline void show_cow_think(char * eyes, char * tongue) {
 }
 ```
 
-#### `show_cow.h`
+#### `include/show_cow.h`
 ```c
 #ifndef SHOW_COW_H
 #define SHOW_COW_H
@@ -570,7 +571,7 @@ void usage(Usage * options, int argc, char * program, const char * description) 
 }
 ```
 
-#### `usage.h`
+#### `include/usage.h`
 ```c
 #ifndef USAGE_H
 #define USAGE_H
@@ -743,7 +744,7 @@ int main(int argc, char *const argv[]) {
 }
 ```
 
-#### `animation.h`
+#### `include/animation.h`
 ```c
 #ifndef ANIMATION_H
 #define ANIMATION_H
@@ -953,4 +954,54 @@ int main(int argc, char const *argv[]) {
 
     return 0;
 }
+```
+
+### `Makefile`
+
+```makefile
+OUTPUT_DIR = dist
+CC = gcc
+LD = ld
+
+# Modifiable via la ligne de commande (USE_PERL=...)
+USE_PERL ?= 1
+
+CCFLAGS = -I include
+LDFLAGS = 
+
+# Si compilation sous MacOS
+ifeq ($(shell uname -s),Darwin)
+    LDFLAGS += -L$(shell xcode-select -p)/SDKs/MacOSX.sdk/usr/lib -lSystem
+else
+    LD = gcc
+endif
+
+# Si compilation avec Perl
+ifeq ($(USE_PERL), 1)
+    CCFLAGS += -D_GNU_SOURCE -DUSE_PERL -I$(shell perl -MConfig -e 'print $$Config{archlib}')/CORE
+    LDFLAGS += -L$(shell perl -MConfig -e 'print $$Config{archlib}')/CORE -lperl
+endif
+
+objs = $(addprefix $(OUTPUT_DIR)/, \
+    print_msg.o \
+    show_cow.o \
+    usage.o \
+)
+
+.PHONY: all clean
+
+all: newcow.exe wildcow.exe reading_cow.exe tamagotchi_cow.exe
+
+clean:
+    @rm -rf cowsay/dist
+    @echo CLEAN
+
+$(OUTPUT_DIR)/%.o: %.c
+    @mkdir -p $(dir $@)
+    @echo CC $@
+    @$(CC) -c $^ -o $@ $(CCFLAGS)
+
+%.exe: $(OUTPUT_DIR)/%.o $(objs)
+    @echo LD $@
+    @$(LD) $^ -o $(OUTPUT_DIR)/$@ $(LDFLAGS)
 ```
