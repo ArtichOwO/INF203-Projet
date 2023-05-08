@@ -293,19 +293,19 @@ Usage: newcow.exe [-e EYES] [-T TONGUE] [-d] [-g] [-p] [-s] [-t] [-w] [-y] [-h] 
 
 `cowsay' rewritten with less options lolwut
 
-    -e  EYES    Define eyes to use (use 2 chars)
-    -T  TONGUE  Define tongue to use (use 1 char)
-    -d      Dead cow
-    -g      Greedy cow
-    -p      Paranoïd cow
-    -s      Stoned cow
-    -t      Tired cow
-    -w      Wired cow
-    -y      Young cow
-    -i      Thinking cow
-    -f  COWFILE Use the given cowfile
-    -h      Show this help
-        INPUT   Input text to say
+	-e	EYES	Define eyes to use (use 2 chars)
+	-T	TONGUE	Define tongue to use (use 1 char)
+	-d		Dead cow
+	-g		Greedy cow
+	-p		Paranoïd cow
+	-s		Stoned cow
+	-t		Tired cow
+	-w		Wired cow
+	-y		Young cow
+	-i		Thinking cow
+	-f	COWFILE Use the given cowfile
+	-h		Show this help
+		INPUT	Input text to say
 ```
 
 #### `newcow.c`
@@ -667,11 +667,11 @@ Usage: wildcow.exe [-r] [-T LENGTH] [-e] [-h] INPUT
 
 Animated `cowsay'
 
-    -r      Running cow
-    -T  LENGTH  Make the cow's tail grow
-    -e      oO
-    -h      Show this help
-        INPUT   Input text to say
+	-r		Running cow
+	-T	LENGTH	Make the cow's tail grow
+	-e		oO
+	-h		Show this help
+		INPUT	Input text to say
 ```
 
 #### `wildcow.c`
@@ -855,8 +855,8 @@ Usage: reading_cow.exe [-h] [FILE]
 
 File-eater `cowsay'
 
-    -h      Show this help
-        FILE    Input file (defaults to stdin)
+	-h		Show this help
+		FILE	Input file (defaults to stdin)
 ```
 
 #### `reading_cow.c`
