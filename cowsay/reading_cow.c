@@ -7,6 +7,15 @@
 #include <print_msg.h>
 #include <show_cow.h>
 #include <animation.h>
+#include <usage.h>
+
+#define ARGC 2
+Usage options[ARGC] = {
+    { "-h", "", "Show this help", false, true, true },
+    { "", "FILE", "Input file (defaults to stdin)", true, false, true },
+};
+
+const char * description = "File-eater `cowsay'";
 
 void print_msg_end(int x, char c) {
     gotoxy(1, x);
@@ -18,6 +27,17 @@ void print_msg_end(int x, char c) {
 }
 
 int main(int argc, char *const argv[]) {
+    int c;
+    while ((c = getopt(argc, argv, "h")) != -1)
+        switch (c) {
+            case 'h':
+                usage(options, ARGC, argv[0], description);
+                exit(EXIT_SUCCESS);
+            default:
+                usage(options, ARGC, argv[0], description);
+                exit(EXIT_FAILURE);
+        }
+
     bool is_stdin = argc == 1;
     
     FILE * input_file;

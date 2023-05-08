@@ -1,3 +1,4 @@
+#include "usage.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <unistd.h>
@@ -23,13 +24,30 @@
 #define T_BASIC " "
 #define T_OUT "U"
 
+#define ARGC 11
+Usage options[ARGC] = {
+    { "-e", "EYES", "Define eyes to use (use 2 chars)", false, false, true },
+    { "-T", "TONGUE", "Define tongue to use (use 1 char)", false, false, true },
+    { "-d", "", "Dead cow", false, true, true },
+    { "-g", "", "Greedy cow", false, true, true },
+    { "-p", "", "Paranoïd cow", false, true, true },
+    { "-s", "", "Stoned cow", false, true, true },
+    { "-t", "", "Tired cow", false, true, true },
+    { "-w", "", "Wired cow", false, true, true },
+    { "-y", "", "Young cow", false, true, true },
+    { "-h", "", "Show this help", false, true, true },
+    { "", "INPUT", "Input text to say", true, false, false },
+};
+
+const char * description = "`cowsay' rewritten with less options lolwut";
+
 int main(int argc, char *const argv[]) {
     char * eyes = E_BASIC;
     char * tongue = T_BASIC;
 
     int c;
 
-    while ((c = getopt(argc, argv, "e:T:dgpstwy")) != -1)
+    while ((c = getopt(argc, argv, "e:T:dgpstwyh")) != -1)
         switch (c) {
             case 'e':
                 eyes = optarg;
@@ -60,7 +78,11 @@ int main(int argc, char *const argv[]) {
             case 'y':
                 eyes = E_YOUTH;
                 break;
+            case 'h':
+                usage(options, ARGC, argv[0], description);
+                exit(EXIT_SUCCESS);
             default:
+                usage(options, ARGC, argv[0], description);
                 exit(EXIT_FAILURE);
         }
 

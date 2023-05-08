@@ -26,6 +26,7 @@ endif
 objs = $(addprefix $(OUTPUT_DIR)/, \
 	print_msg.o \
 	show_cow.o \
+	usage.o \
 )
 
 .PHONY: clean all

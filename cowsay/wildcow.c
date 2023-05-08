@@ -7,12 +7,21 @@
 #include <print_msg.h>
 #include <show_cow.h>
 #include <animation.h>
+#include <usage.h>
+
+#define ARGC 5
+Usage options[ARGC] = {
+    { "-r", "", "Running cow", false, true, true },
+    { "-T", "LENGTH", "Make the cow's tail grow", false, false, true },
+    { "-e", "", "oO", false, true, true },
+    { "-h", "", "Show this help", false, true, true },
+    { "", "INPUT", "Input text to say", true, false, false },
+};
+
+const char * description = "Animated `cowsay'";
 
 void a_run() {
     const char * anim[] = {
-        "            ||----w |   \n"
-        "            ||     ||   \n",
-
         "            /|----w /   \n"
         "            |\\     \\|   \n",
 
@@ -34,7 +43,7 @@ void a_run() {
 
     struct timespec ts = {
         .tv_sec = 0,
-        .tv_nsec = 500 * 1000000
+        .tv_nsec = 250 * 1000000
     };
 
     while (true) {
@@ -88,7 +97,7 @@ int main(int argc, char *const argv[]) {
 
     int A_TAIL_length = 0;
 
-    while ((c = getopt(argc, argv, "rT:e")) != -1)
+    while ((c = getopt(argc, argv, "rT:eh")) != -1)
         switch (c) {
             case 'r':
                 animation = A_RUN;
@@ -100,7 +109,11 @@ int main(int argc, char *const argv[]) {
             case 'e':
                 animation = A_EYES;
                 break;
+            case 'h':
+                usage(options, ARGC, argv[0], description);
+                exit(EXIT_SUCCESS);
             default:
+                usage(options, ARGC, argv[0], description);
                 exit(EXIT_FAILURE);
         }
 
