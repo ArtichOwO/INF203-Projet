@@ -14,6 +14,8 @@ static PerlInterpreter * my_perl;
 #include <print_msg.h>
 #include <show_cow.h>
 
+/* Yeux et langues de base
+ */
 #define E_BASIC "oo"
 #define E_DEAD "xx"
 #define E_GREEDY "$$"
@@ -26,6 +28,9 @@ static PerlInterpreter * my_perl;
 #define T_BASIC " "
 #define T_OUT "U"
 
+/* Documentation
+ * cf. /include/usage.h
+ */
 #ifndef USE_PERL
 #define ARGC 12
 #else
@@ -63,8 +68,8 @@ int main(int argc, char *const argv[], char *const env[]) {
     char * my_argv[2];
     #endif
 
+    // Parsing d'argument basique
     int c;
-
     while ((c = getopt(argc, argv, "e:T:dgpstwyif:h")) != -1)
         switch (c) {
             case 'e':
@@ -115,12 +120,18 @@ int main(int argc, char *const argv[], char *const env[]) {
 
     #ifdef USE_PERL
     if (use_cowfile) {
+        /* Initialisation de l'environnement Perl
+         * avec en argument le cowfile à exécuter
+         */
         PERL_SYS_INIT3(&argc, (char ***)&argv, (char ***)&env);
         my_perl = perl_alloc();
         perl_construct(my_perl);
         PL_exit_flags |= PERL_EXIT_DESTRUCT_END;
         perl_parse(my_perl, NULL, 2, my_argv, (char **)NULL);
 
+        /* Définitions des variables eyes, tongue et thoughts
+         * pour le script Perl qui retournera the_cow
+         */
         char * perl_eyes = malloc(14);
         sprintf(perl_eyes, "$eyes = \"%s\"", eyes);
         eval_pv(perl_eyes, TRUE);
@@ -144,12 +155,14 @@ int main(int argc, char *const argv[], char *const env[]) {
 
         printf("%s", SvPV_nolen(get_sv("the_cow", 0)));
 
+        // Termination de l'environnement
         perl_destruct(my_perl);
         perl_free(my_perl);
         PERL_SYS_TERM();
     } else {
     #endif
 
+    // Impression de la vache
     if (!think) 
         print_msg(argc, argv, optind);
     else

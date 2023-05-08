@@ -4,12 +4,12 @@
 #include <stdbool.h>
 
 typedef struct {
-	char * key;
-	char * arg;
-	char * description;
-	bool no_key;
-	bool no_arg;
-	bool optional;
+    char * key; // -a
+    char * arg; // ARG
+    char * description; // Description de l'option a
+    bool no_key; // ARG
+    bool no_arg; // -a
+    bool optional; // [-a ARG]
 } Usage;
 
 void usage(Usage * options, int argc, char * program, const char * description);
