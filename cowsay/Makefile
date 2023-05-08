@@ -29,13 +29,9 @@ objs = $(addprefix $(OUTPUT_DIR)/, \
 	usage.o \
 )
 
-.PHONY: clean all
+.PHONY: all
 
 all: newcow.exe wildcow.exe reading_cow.exe tamagotchi_cow.exe
-
-clean:
-	@echo CLEAN
-	@rm -Rf dist
 
 $(OUTPUT_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
