@@ -28,6 +28,8 @@ Les sources sont disponibles à [cette adresse](https://github.com/ArtichOwO/INF
     - [`animation.h`](#animationh)
   - [`reading_cow`](#reading_cow)
     - [`reading_cow.c`](#reading_cowc)
+  - [`tamagotchi_cow`](#tamagotchi_cow)
+    - [`tamagotchi_cow.c`](#tamagotchi_cowc)
 
 ## Préliminaires
 
