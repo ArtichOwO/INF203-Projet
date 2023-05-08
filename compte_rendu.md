@@ -204,6 +204,18 @@ cowsay -e $(printf "%02i" $(echo "$1" | bc)) "$1"
 
 ### Crazy cow
 
+```
+$ ./cow_crazy.sh 4
+ ____________________________________
+< Look-and-say: 1 11 21 1211 111221! >
+ ------------------------------------
+        \   ^__^
+         \  (°°)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+```
+
 ```bash
 #!/bin/bash
 
@@ -263,6 +275,38 @@ Les fichiers se trouvent dans le dossier [/cowsay/](https://github.com/ArtichOwO
 **Makefile**
 
 ### `newcow`
+
+```
+$ ./newcow.exe -i -t "Remember when /b/ was good?"            
+ _____________________________
+( Remember when /b/ was good? )
+ -----------------------------
+    o   ^__^
+     o  (--)\_______
+        (__)\       )\/\
+            ||----w |
+            ||     ||
+```
+
+```sh
+Usage: newcow.exe [-e EYES] [-T TONGUE] [-d] [-g] [-p] [-s] [-t] [-w] [-y] [-h] INPUT 
+
+`cowsay' rewritten with less options lolwut
+
+    -e  EYES    Define eyes to use (use 2 chars)
+    -T  TONGUE  Define tongue to use (use 1 char)
+    -d      Dead cow
+    -g      Greedy cow
+    -p      Paranoïd cow
+    -s      Stoned cow
+    -t      Tired cow
+    -w      Wired cow
+    -y      Young cow
+    -i      Thinking cow
+    -f  COWFILE Use the given cowfile
+    -h      Show this help
+        INPUT   Input text to say
+```
 
 #### `newcow.c`
 ```c
@@ -606,6 +650,30 @@ void usage(Usage * options, int argc, char * program, const char * description);
 
 ### `wildcow`
 
+```
+$ ./dist/newcow.exe -T 15 1 "/b/ was never good." 
+ _____________________
+< /b/ was never good. >
+ ---------------------
+    \   ^__^
+     \  (oo)\_______
+        (__)\       )\/\/\/\/\/\/\/\
+            ||----w |
+            ||     ||
+```
+
+```sh
+Usage: wildcow.exe [-r] [-T LENGTH] [-e] [-h] INPUT 
+
+Animated `cowsay'
+
+    -r      Running cow
+    -T  LENGTH  Make the cow's tail grow
+    -e      oO
+    -h      Show this help
+        INPUT   Input text to say
+```
+
 #### `wildcow.c`
 ```c
 #include <stdio.h>
@@ -770,6 +838,27 @@ int main(int argc, char *const argv[]) {
 
 ### `reading_cow`
 
+```
+ _______________________________________
+< when where you when john lenin dies?  >
+ ---------------------------------------
+    \   ^__^
+     \  (oo)\_______
+        (__)\       )\/\
+            ||----w |
+            ||     ||
+Your input (Enter to confirm, CTRL+D to exit): 'john is kill' 'no'
+```
+
+```sh
+Usage: reading_cow.exe [-h] [FILE] 
+
+File-eater `cowsay'
+
+    -h      Show this help
+        FILE    Input file (defaults to stdin)
+```
+
 #### `reading_cow.c`
 ```c
 #include <stdio.h>
@@ -882,6 +971,19 @@ int main(int argc, char *const argv[]) {
 ## Automates
 
 ### `tamagotchi_cow`
+
+```
+ _________
+< Time: 3 >
+ ---------
+    \   ^__^
+     \  (@@)\_______
+        (__)\       )\/\
+            ||----w |
+            ||     ||
+Current stock: 1
+Give how much food: 
+```
 
 #### `tamagotchi_cow.c`
 ```c
