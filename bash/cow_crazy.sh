@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 lookandsay() {
     n=$1
@@ -33,6 +33,6 @@ lookandsay() {
 }
 
 sequence=1
-for i in $(seq 2 4); do sequence+=" $(lookandsay $i)"; done
+for i in $(seq 2 $1); do sequence+=" $(lookandsay $i)"; done
 
-cowsay "Look-and-say: $sequence!"
+cowsay -e "°°" "Look-and-say: $sequence!"
