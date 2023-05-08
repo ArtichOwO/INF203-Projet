@@ -25,3 +25,7 @@ void print_msg(int argc, char *const argv[], int begin) {
         printf("-");
     printf("\n");
 }
+
+inline void print_msg_str(char * msg) {
+    print_msg(1, &msg, 0);
+}
