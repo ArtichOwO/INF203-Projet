@@ -18,38 +18,29 @@ void print_msg_end(int x, char c) {
 }
 
 int main(int argc, char *const argv[]) {
-    bool is_stdin = false;
-
-    char c;
-    while ((c = getopt(argc, argv, "i")) != -1)
-        switch (c) {
-            case 'i':
-                is_stdin = true;
-                break;
-        }
-
+    bool is_stdin = argc == 1;
+    
     FILE * input_file;
 
     if (is_stdin) {
-        printf("STDIN\n");
         input_file = stdin;
     } else {
-        printf("%s\n", argv[argc-1]);
         input_file = fopen(argv[argc-1], "r");
     }
 
-    if ( input_file == NULL ) {
-        printf( "Cannot open file %s\n", argv[0] );
-        exit( -1 );
+    if (input_file == NULL) {
+        printf("Cannot open file %s\n", argv[0]);
+        exit(-1);
     }
 
     struct timespec ts = {
         .tv_sec = 0,
         .tv_nsec = 500 * 1000000
     };
-    
+
     update();
     print_msg(0, NULL, 0);
+    show_cow("oo", " ");
 
     char letter = ' ';
     char tongue[] = { ' ', '\0' };
@@ -57,7 +48,11 @@ int main(int argc, char *const argv[]) {
     for (int i = 2; !feof(input_file); i++) {
         print_msg_end(i, letter);
 
+        gotoxy(9, 0);
+        if (is_stdin)
+            printf("\33[2K\rYour input (CTRL+D to exit): ");
         letter = fgetc(input_file);
+        printf("\33[2K\r");
         letter = letter == '\n' ? ' ' : letter; 
         tongue[0] = letter == EOF ? 'U' : letter;
         gotoxy(4, 0);
@@ -69,6 +64,7 @@ int main(int argc, char *const argv[]) {
     }
 
     gotoxy(9, 0);
+    fclose(input_file);
 
     return 0;
 }
