@@ -16,13 +16,13 @@ Les sources sont disponibles à [cette adresse](https://github.com/ArtichOwO/INF
   - [Crazy cow](#crazy-cow)
 - [C](#c)
   - [`newcow`](#newcow)
-    - [`newcow.c`](newcowc)
-    - [`print_msg.c`](print_msgc)
-    - [`print_msg.h`](print_msgh)
-    - [`show_cow.c`](show_cowc)
-    - [`show_cow.h`](show_cowh)
-    - [`usage.c`](usagec)
-    - [`usage.h`](usageh)
+    - [`newcow.c`](#newcowc)
+    - [`print_msg.c`](#print_msgc)
+    - [`print_msg.h`](#print_msgh)
+    - [`show_cow.c`](#show_cowc)
+    - [`show_cow.h`](#show_cowh)
+    - [`usage.c`](#usagec)
+    - [`usage.h`](#usageh)
 
 ## Préliminaires
 
