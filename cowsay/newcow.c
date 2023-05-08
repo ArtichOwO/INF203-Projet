@@ -2,10 +2,14 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <string.h>
 
+#ifdef USE_PERL
 #include <EXTERN.h>
 #include <perl.h>
+#endif
+
+#include <print_msg.h>
+#include <show_cow.h>
 
 #define E_BASIC "oo"
 #define E_DEAD "xx"
@@ -18,40 +22,6 @@
 
 #define T_BASIC " "
 #define T_OUT "U"
-
-void affiche_message(int argc, char *const argv[], int begin) {
-    int i;
-
-    size_t msg_len = 0;
-    for (i = begin; i < argc; i++)
-        msg_len += strlen(argv[i]) + 1;
-
-    printf(" _");
-    for (i = 0; i < msg_len; i++)
-        printf("_");
-    printf("\n");
-
-    printf("< ");
-    for (i = begin; i < argc; i++)
-        printf("%s ", argv[i]);
-    printf(">\n");
-
-    printf(" -");
-    for (i = 0; i < msg_len; i++)
-        printf("-");
-    printf("\n");
-}
-
-void affiche_vache(char * eyes, char * tongue) {
-    const char * cow = 
-        "    \\   ^__^\n"
-        "     \\  (%s)\\_______\n"
-        "        (__)\\       )\\/\\\n"
-        "         %s  ||----w |\n"
-        "            ||     ||\n";
-    
-    printf(cow, eyes, tongue);
-}
 
 int main(int argc, char *const argv[]) {
     char * eyes = E_BASIC;
@@ -94,8 +64,8 @@ int main(int argc, char *const argv[]) {
                 exit(EXIT_FAILURE);
         }
 
-    affiche_message(argc, argv, optind);
-    affiche_vache(eyes, tongue);
+    print_msg(argc, argv, optind);
+    show_cow(eyes, tongue);
 
     return 0;
 }
