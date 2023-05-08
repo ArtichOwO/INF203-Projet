@@ -272,7 +272,14 @@ cowsay -e "°°" "Look-and-say: $sequence!"
 
 Les fichiers se trouvent dans le dossier [/cowsay/](https://github.com/ArtichOwO/INF203-Projet/tree/master/cowsay).
 
-**Makefile**
+3 des programmes utilisent `getopt`, fonction permettant de parser de façon rudimentaire des arguments à un caractère : `getopt(argc, argv, opts)` renvoie successivement les caractères correspondant aux drapeaux utilisés, jusqu'à retourner -1 quand il n'y a plus de drapeau à parser.  
+S'il est écrit `:` derrière le drapeau dans `opts`, cela signifie qu'il est sensé y avoir une valeur donnée par l'utilisateur (ex: `-a ARG`), cette dernière ira dans la variable `optarg`.  
+`optind` contient l'index où s'est arrêtée la fonction (cela correspond à un index dans `argv`).
+
+L'écriture de `usage` permet d'imprimer un menu d'aide très mignon, facilement installable grâce au type `Usage` (il suffit de faire un tableau contenant les options, puis d'appeler la fonction `usage` au moment opportun).
+
+Les fonctions partagées entre les programmes ont été déplacées dans leurs fichiers respectifs, afin de réduire le temps de compilation et la taille des exécutables, mais également d'éviter de répéter du code inutilement.  
+Tout est compilé en fichier objet (ELF sur Linux et Mach-O sur les \*BSD, comme MacOS), puis linké correctement : on le voit en bas de page, dans le fichier Makefile.
 
 ### `newcow`
 
@@ -307,6 +314,8 @@ Usage: newcow.exe [-e EYES] [-T TONGUE] [-d] [-g] [-p] [-s] [-t] [-w] [-y] [-h] 
 	-h		Show this help
 		INPUT	Input text to say
 ```
+
+Mis à part les options de visage, le point important à noter est le support des cowfiles (fichiers Perl contenant des modèles de "vaches"), permis par la librairie libperl.
 
 #### `newcow.c`
 ```c
@@ -673,6 +682,9 @@ Animated `cowsay'
 	-h		Show this help
 		INPUT	Input text to say
 ```
+
+L'utilisation des fonctions `update` et `gotoxy` permet de faire des animations précises (pas forcément très jolies, cependant).  
+Les deux implémentations proposées par le sujet du projet ont été adaptées pour n'être que des macros de préprocesseur, afin de limiter les appels.
 
 #### `wildcow.c`
 ```c
@@ -1099,6 +1111,8 @@ int main(int argc, char const *argv[]) {
 ```
 
 ## `Makefile`
+
+Dans ce Makefile on peut noter l'utilisation de rules spéciales : le `%` permet d'éviter de dupliquer les rules répétitives. En indiquant dans `objs` les fichiers objets à compiler, le build system est capable de comprendre qu'il faut aller chercher le fichier C correspondant (si le fichier C n'existe pas, `make` retournera une erreur d'absence de règle).
 
 ```makefile
 OUTPUT_DIR = dist
