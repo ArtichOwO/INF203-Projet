@@ -43,6 +43,9 @@ Usage options[ARGC] = {
     { "-w", "", "Wired cow", false, true, true },
     { "-y", "", "Young cow", false, true, true },
     { "-i", "", "Thinking cow", false, true, true },
+    #ifdef USE_PERL
+    { "-f", "COWFILE", "Use the given cowfile", false, false, true },
+    #endif
     { "-h", "", "Show this help", false, true, true },
     { "", "INPUT", "Input text to say", true, false, false },
 };

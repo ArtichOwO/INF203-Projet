@@ -13,6 +13,8 @@ Targets:
 cd cowsay && make
 ```
 
+Add `USE_PERL=0` to disable Perl on `newcow.exe` (this will disable the `-f` option).
+
 ## Usage
 
 ### `newcow.exe`
@@ -32,6 +34,7 @@ Usage: newcow.exe [-e EYES] [-T TONGUE] [-d] [-g] [-p] [-s] [-t] [-w] [-y] [-h] 
 	-w		Wired cow
 	-y		Young cow
 	-i		Thinking cow
+	-f	COWFILE	Use the given cowfile
 	-h		Show this help
 		INPUT	Input text to say
 ```
