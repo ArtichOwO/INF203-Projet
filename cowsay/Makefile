@@ -3,7 +3,7 @@ CC = gcc
 LD = ld
 
 DEBUG ?= 0
-USE_PERL ?= 0
+USE_PERL ?= 1
 
 CCFLAGS = -I include 
 LDFLAGS = 
@@ -19,7 +19,7 @@ ifeq ($(DEBUG), 1)
 endif
 
 ifeq ($(USE_PERL), 1)
-	CCFLAGS += -DUSE_PERL -I$(shell perl -MConfig -e 'print $$Config{archlib}')/CORE
+	CCFLAGS += -D_GNU_SOURCE -DUSE_PERL -I$(shell perl -MConfig -e 'print $$Config{archlib}')/CORE
 	LDFLAGS += -L$(shell perl -MConfig -e 'print $$Config{archlib}')/CORE -lperl
 endif
 

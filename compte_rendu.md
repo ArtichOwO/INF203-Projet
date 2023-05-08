@@ -214,3 +214,15 @@ for i in $(seq 2 $1); do sequence+=" $(lookandsay $i)"; done
 
 cowsay -e "°°" "Look-and-say: $sequence!"
 ```
+
+## C
+
+Les fichiers se trouvent dans le dossier [/cowsay/](https://github.com/ArtichOwO/INF203-Projet/tree/master/cowsay).
+
+**Makefile**
+
+### `newcow`
+
+**newcow.c**
+```c
+```
