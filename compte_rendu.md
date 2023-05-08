@@ -9,7 +9,7 @@ Les sources sont disponibles à [cette adresse](https://github.com/ArtichOwO/INF
 |:-:|:-|
 |`-n`|Désactiver le retour à la ligne automatique.|
 
-```sh
+```
 $ figlet "AMIRITE?" | cowsay -n
 ________________________________________________
 /     _    __  __ ___ ____  ___ _____ _____ ___  \
@@ -30,7 +30,7 @@ ________________________________________________
 |:-:|:-|
 |`-W`|Définir la colonne à laquelle faire un retour à la ligne.|
 
-```sh
+```
 $ cowsay -W 10 "CAPS LOCK IS CRUISE CONTROL FOR COOL"
  ___________
 / CAPS LOCK \
@@ -61,7 +61,7 @@ $ cowsay -W 10 "CAPS LOCK IS CRUISE CONTROL FOR COOL"
 |`-e YEUX`|Définir de nouveaux yeux.|
 |`-T LANGUE`|Définir une nouvelle langue.|
 
-```sh
+```
 $ cowsay -e "♥♥" -T U "Let's All Love Lain"
  _____________________
 < Let's All Love Lain >
@@ -78,7 +78,7 @@ $ cowsay -e "♥♥" -T U "Let's All Love Lain"
 |`-l`|Lister les cowfiles dans `$COWPATH`.|
 |`-f FICHIER`|Choisir un cowfile différent.|
 
-```sh
+```
 $ cowsay -f vader "DO NOT WANT"
  _____________
 < DO NOT WANT >
@@ -91,4 +91,126 @@ $ cowsay -f vader "DO NOT WANT"
                 ||      ||
 
                Cowth Vader
+```
+
+## Bash
+
+### Kindergarten cow
+
+```bash
+#!/bin/bash
+
+for i in $(seq 1 10); do
+    clear
+    cowsay -y $i
+    sleep 1
+done
+```
+
+### Primary school cow
+
+```bash
+#!/bin/bash
+
+for i in $(seq 1 $1); do
+    clear
+    cowsay -y $i
+    sleep 1
+done
+```
+
+### Highscool cow
+
+```bash
+#!/bin/bash
+
+for i in $(seq 1 $1); do
+    clear
+    cowsay -y $(echo $i^2 | bc)
+    sleep 1
+done
+```
+
+### College cow
+
+```bash
+#!/bin/bash
+
+a=0
+b=1
+
+for i in $(seq 0 $1); do
+    clear
+    cowsay " $a "
+    c=$(expr $a + $b)
+    a=$b
+    b=$c
+    sleep 1
+done
+```
+
+### University cow
+
+```bash
+#!/bin/bash
+
+for i in $(seq 2 $1); do
+    n=$(factor $i | awk 'NF==2{print $2}')
+    if [ "$n" != "" ]; then
+        clear
+        cowsay -b $n
+        sleep 1
+    fi
+done
+```
+
+### Smart cow
+
+```bash
+#!/bin/bash
+
+cowsay -e $(printf "%02i" $(echo "$1" | bc)) "$1"
+```
+
+### Crazy cow
+
+```bash
+#!/bin/bash
+
+lookandsay() {
+    n=$1
+
+    [ $n -eq 1 ] && echo 1
+    [ $n -eq 2 ] && echo 11
+
+    s=11
+
+    for i in $(seq 3 $(expr $n + 1)); do
+        s+="#"
+        l=$(expr $(echo $s | wc -c) - 1)
+
+        cnt=1
+        tmp=""
+
+        for j in $(seq 1 $(expr $l - 1)); do
+            sjm1=${s:$(expr $j - 1):1}
+
+            if [ ${s:$j:1} != $sjm1 ]; then
+                tmp+="$cnt$sjm1"
+                cnt=1
+            else
+                cnt=$(expr $cnt + 1)
+            fi
+        done
+
+        s=$tmp
+    done
+
+    echo $s
+}
+
+sequence=1
+for i in $(seq 2 $1); do sequence+=" $(lookandsay $i)"; done
+
+cowsay -e "°°" "Look-and-say: $sequence!"
 ```
